@@ -12,22 +12,37 @@
     position:absolute;
 }
 
-.body{
-    left:90px;
-    top:145px;
+.antenna{
+    left:144px;
+    top:13px;
 }
 
 .head{
-    left:58px;
-    top:0;
-}
-
-.antenna{
-    left:120px;
-    top:-18px;
+    left:87px;
+    top:41px;
 }
 
 .neck{
-    left:112px;
-    top:118px;
+    left:130px;
+    top:146px;
+}
+
+.body{
+    left:100px;
+    top:150px;
+}
+
+.leftArm{
+    left:190px;
+    top:150px;
+}
+
+.rightArm{
+    left:77px;
+    top:150px;
+}
+
+.wheel{
+    left:120px;
+    top:265px;
 }
