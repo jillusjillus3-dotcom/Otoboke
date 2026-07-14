@@ -63,6 +63,22 @@
     height:41px;
 }
 
+.eye-base {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.eye-pupil {
+    position: absolute;
+    left: 15px;
+    top: 14px;
+    width: 14px;
+    height: 13px;
+}
+
 .mouth{
     left:24px;
     top:62px;
@@ -72,8 +88,12 @@
 
 .neck{
     left:130px;
-    top:146px;
+    top:126px;
+    width:39px;
+    height:30px;
     z-index: 1;
+    transform-origin: 20px 30px;
+    animation: headIdle 6s ease-in-out infinite;
 }
 
 .body{
@@ -82,16 +102,104 @@
     z-index: 2;
 }
 
-.leftArm{
-    left:190px;
-    top:150px;
+.leftArm, .rightArm {
+    position: absolute;
+    width: 33px;
+    height: 118px;
     z-index: 1;
 }
 
-.rightArm{
-    left:77px;
-    top:150px;
-    z-index: 1;
+.leftArm {
+    left: 198.5px;
+    top: 155px;
+}
+
+.rightArm {
+    left: 68.5px;
+    top: 155px;
+}
+
+.arm-shoulder,
+.arm-upperArm,
+.arm-upperJoint,
+.arm-lowerArm,
+.arm-lowerJoint,
+.arm-claw {
+    position: absolute;
+}
+
+.leftArm .arm-shoulder {
+    left: 0px;
+    top: 0px;
+    width: 23px;
+    height: 23px;
+}
+
+.rightArm .arm-shoulder {
+    left: 10px;
+    top: 0px;
+    width: 23px;
+    height: 23px;
+}
+
+.UpperArmWrapper,
+.LowerArmWrapper {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    transform-origin: top center;
+}
+
+.leftArm .UpperArmWrapper {
+    left: 23px;
+    top: 11.5px;
+    animation: leftArmSwing 6s ease-in-out infinite;
+}
+
+.rightArm .UpperArmWrapper {
+    left: 10px;
+    top: 11.5px;
+    animation: rightArmSwing 6s ease-in-out infinite;
+}
+
+.LowerArmWrapper {
+    left: 0px;
+    top: 39px;
+}
+
+.arm-upperArm {
+    left: -8px;
+    top: 0px;
+    width: 16px;
+    height: 35px;
+}
+
+.arm-upperJoint {
+    left: -3px;
+    top: 35px;
+    width: 6px;
+    height: 4px;
+}
+
+.arm-lowerArm {
+    left: -8px;
+    top: 0px;
+    width: 16px;
+    height: 35px;
+}
+
+.arm-lowerJoint {
+    left: -3px;
+    top: 35px;
+    width: 6px;
+    height: 4px;
+}
+
+.arm-claw {
+    left: -10px;
+    top: 39px;
+    width: 20px;
+    height: 28px;
 }
 
 .wheel{
@@ -160,6 +268,7 @@
 
 }
 
+
 .antenna{
     animation: antennaBounce 2.5s ease-in-out infinite;
     transform-origin: bottom center;
@@ -184,6 +293,54 @@
     }
 
     100%{
+        transform: rotate(0deg);
+    }
+
+}
+
+@keyframes leftArmSwing {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(4deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+
+}
+
+@keyframes rightArmSwing {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(4deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-4deg);
+    }
+
+    100% {
         transform: rotate(0deg);
     }
 

@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 import "./Robot.css";
 
 import HeadFrame from "../../assets/svg/HeadFrame.svg";
@@ -6,20 +7,154 @@ import LeftEye from "../../assets/svg/LeftEye.svg";
 import RightEye from "../../assets/svg/RightEye.svg";
 import Mouth from "../../assets/svg/Mouth.svg";
 import Body from "../../assets/svg/Body.svg";
-import LeftArm from "../../assets/svg/LeftArm.svg";
-import RightArm from "../../assets/svg/RightArm.svg";
 import Neck from "../../assets/svg/Neck.svg";
 import Wheel from "../../assets/svg/Wheel.svg";
 import Antenna from "../../assets/svg/Antenna.svg";
 
+// Left arm parts
+import LeftShoulder from "../../assets/svg/LeftShoulder.svg";
+import LeftUpperJoint from "../../assets/svg/LeftUpperJoint.svg";
+import LeftUpperArm from "../../assets/svg/LeftUpperArm.svg";
+import LeftLowerJoint from "../../assets/svg/LeftLowerJoint.svg";
+import LeftLowerArm from "../../assets/svg/LeftLowerArm.svg";
+import LeftClaw from "../../assets/svg/LeftClaw.svg";
+
+// Right arm parts
+import RightShoulder from "../../assets/svg/RightShoulder.svg";
+import RightUpperJoint from "../../assets/svg/RightUpperJoint.svg";
+import RightUpperArm from "../../assets/svg/RightUpperArm.svg";
+import RightLowerJoint from "../../assets/svg/RightLowerJoint.svg";
+import RightLowerArm from "../../assets/svg/RightLowerArm.svg";
+import RihtClaw from "../../assets/svg/RihtClaw.svg";
+
+// Eye pupils
+import LeftPupil from "../../assets/svg/LeftPupil.svg";
+import RightPupil from "../../assets/svg/RightPupil.svg";
+
 function Robot() {
+  const leftEyeRef = useRef(null);
+  const rightEyeRef = useRef(null);
+  const leftPupilRef = useRef(null);
+  const rightPupilRef = useRef(null);
+
+  useEffect(() => {
+    let mouseX = null;
+    let mouseY = null;
+    let isMouseInWindow = false;
+
+    const handleMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      isMouseInWindow = true;
+    };
+
+    const handleMouseLeave = () => {
+      isMouseInWindow = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    let leftCurrentX = 0;
+    let leftCurrentY = 0;
+    let rightCurrentX = 0;
+    let rightCurrentY = 0;
+
+    const LERP_FACTOR = 0.15;
+    const MAX_DISPLACEMENT = 5.5;
+
+    let animationFrameId;
+
+    const updatePupils = () => {
+      let leftTargetX = 0;
+      let leftTargetY = 0;
+      if (isMouseInWindow && mouseX !== null && leftEyeRef.current) {
+        const rect = leftEyeRef.current.getBoundingClientRect();
+        const eyeCenterX = rect.left + rect.width / 2;
+        const eyeCenterY = rect.top + rect.height / 2;
+        const dx = mouseX - eyeCenterX;
+        const dy = mouseY - eyeCenterY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 0) {
+          const r = Math.min(MAX_DISPLACEMENT, dist * 0.05);
+          leftTargetX = (dx / dist) * r;
+          leftTargetY = (dy / dist) * r;
+        }
+      }
+
+      let rightTargetX = 0;
+      let rightTargetY = 0;
+      if (isMouseInWindow && mouseX !== null && rightEyeRef.current) {
+        const rect = rightEyeRef.current.getBoundingClientRect();
+        const eyeCenterX = rect.left + rect.width / 2;
+        const eyeCenterY = rect.top + rect.height / 2;
+        const dx = mouseX - eyeCenterX;
+        const dy = mouseY - eyeCenterY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 0) {
+          const r = Math.min(MAX_DISPLACEMENT, dist * 0.05);
+          rightTargetX = (dx / dist) * r;
+          rightTargetY = (dy / dist) * r;
+        }
+      }
+
+      leftCurrentX += (leftTargetX - leftCurrentX) * LERP_FACTOR;
+      leftCurrentY += (leftTargetY - leftCurrentY) * LERP_FACTOR;
+      rightCurrentX += (rightTargetX - rightCurrentX) * LERP_FACTOR;
+      rightCurrentY += (rightTargetY - rightCurrentY) * LERP_FACTOR;
+
+      if (leftPupilRef.current) {
+        leftPupilRef.current.style.transform = `translate(${leftCurrentX.toFixed(2)}px, ${leftCurrentY.toFixed(2)}px)`;
+      }
+      if (rightPupilRef.current) {
+        rightPupilRef.current.style.transform = `translate(${rightCurrentX.toFixed(2)}px, ${rightCurrentY.toFixed(2)}px)`;
+      }
+
+      animationFrameId = requestAnimationFrame(updatePupils);
+    };
+
+    updatePupils();
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
   return (
     <div className="robot">
       
       <img src={Neck} className="neck" alt="neck" />
-      <img src={LeftArm} className="leftArm" alt="left arm" />
+      
+      <div className="leftArm">
+        <img src={LeftShoulder} className="arm-shoulder" alt="left shoulder" />
+        <div className="UpperArmWrapper">
+          <img src={LeftUpperJoint} className="arm-upperJoint" alt="left upper joint" />
+          <img src={LeftUpperArm} className="arm-upperArm" alt="left upper arm" />
+          <div className="LowerArmWrapper">
+            <img src={LeftLowerJoint} className="arm-lowerJoint" alt="left lower joint" />
+            <img src={LeftLowerArm} className="arm-lowerArm" alt="left lower arm" />
+            <img src={LeftClaw} className="arm-claw" alt="left claw" />
+          </div>
+        </div>
+      </div>
+      
       <img src={Body} className="body" alt="body" />
-      <img src={RightArm} className="rightArm" alt="right arm" />
+      
+      <div className="rightArm">
+        <img src={RightShoulder} className="arm-shoulder" alt="right shoulder" />
+        <div className="UpperArmWrapper">
+          <img src={RightUpperJoint} className="arm-upperJoint" alt="right upper joint" />
+          <img src={RightUpperArm} className="arm-upperArm" alt="right upper arm" />
+          <div className="LowerArmWrapper">
+            <img src={RightLowerJoint} className="arm-lowerJoint" alt="right lower joint" />
+            <img src={RightLowerArm} className="arm-lowerArm" alt="right lower arm" />
+            <img src={RihtClaw} className="arm-claw" alt="right claw" />
+          </div>
+        </div>
+      </div>
+      
       <img src={Wheel} className="wheel" alt="wheel" />
       
       <div className="head">
@@ -27,8 +162,14 @@ function Robot() {
         <img src={HeadFrame} className="headFrame" alt="head frame" />
         <div className="screen">
           <img src={FaceScreen} className="faceScreen" alt="face screen" />
-          <img src={LeftEye} className="left-eye" alt="left eye" />
-          <img src={RightEye} className="right-eye" alt="right eye" />
+          <div className="left-eye" ref={leftEyeRef}>
+            <img src={LeftEye} className="eye-base" alt="left eye" />
+            <img src={LeftPupil} className="eye-pupil" ref={leftPupilRef} alt="left pupil" />
+          </div>
+          <div className="right-eye" ref={rightEyeRef}>
+            <img src={RightEye} className="eye-base" alt="right eye" />
+            <img src={RightPupil} className="eye-pupil" ref={rightPupilRef} alt="right pupil" />
+          </div>
           <img src={Mouth} className="mouth" alt="mouth" />
         </div>
       </div>
