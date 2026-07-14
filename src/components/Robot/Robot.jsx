@@ -41,11 +41,13 @@ function Robot() {
     let mouseX = null;
     let mouseY = null;
     let isMouseInWindow = false;
+    let lastMoveTime = Date.now();
 
     const handleMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       isMouseInWindow = true;
+      lastMoveTime = Date.now();
     };
 
     const handleMouseLeave = () => {
@@ -60,15 +62,20 @@ function Robot() {
     let rightCurrentX = 0;
     let rightCurrentY = 0;
 
-    const LERP_FACTOR = 0.15;
+    const ACTIVE_LERP = 0.15; // Snappy tracking when active
+    const RETURN_LERP = 0.06; // Slow, smooth centering drift
     const MAX_DISPLACEMENT = 5.5;
+    const INACTIVITY_LIMIT = 10000; // 10 seconds
 
     let animationFrameId;
 
     const updatePupils = () => {
+      const now = Date.now();
+      const isIdle = now - lastMoveTime >= INACTIVITY_LIMIT;
+
       let leftTargetX = 0;
       let leftTargetY = 0;
-      if (isMouseInWindow && mouseX !== null && leftEyeRef.current) {
+      if (isMouseInWindow && !isIdle && mouseX !== null && leftEyeRef.current) {
         const rect = leftEyeRef.current.getBoundingClientRect();
         const eyeCenterX = rect.left + rect.width / 2;
         const eyeCenterY = rect.top + rect.height / 2;
@@ -84,7 +91,7 @@ function Robot() {
 
       let rightTargetX = 0;
       let rightTargetY = 0;
-      if (isMouseInWindow && mouseX !== null && rightEyeRef.current) {
+      if (isMouseInWindow && !isIdle && mouseX !== null && rightEyeRef.current) {
         const rect = rightEyeRef.current.getBoundingClientRect();
         const eyeCenterX = rect.left + rect.width / 2;
         const eyeCenterY = rect.top + rect.height / 2;
@@ -98,10 +105,14 @@ function Robot() {
         }
       }
 
-      leftCurrentX += (leftTargetX - leftCurrentX) * LERP_FACTOR;
-      leftCurrentY += (leftTargetY - leftCurrentY) * LERP_FACTOR;
-      rightCurrentX += (rightTargetX - rightCurrentX) * LERP_FACTOR;
-      rightCurrentY += (rightTargetY - rightCurrentY) * LERP_FACTOR;
+      // Determine lerp factor based on target coordinates (slower return to center)
+      const isCentering = (leftTargetX === 0 && leftTargetY === 0 && rightTargetX === 0 && rightTargetY === 0);
+      const currentLerp = isCentering ? RETURN_LERP : ACTIVE_LERP;
+
+      leftCurrentX += (leftTargetX - leftCurrentX) * currentLerp;
+      leftCurrentY += (leftTargetY - leftCurrentY) * currentLerp;
+      rightCurrentX += (rightTargetX - rightCurrentX) * currentLerp;
+      rightCurrentY += (rightTargetY - rightCurrentY) * currentLerp;
 
       if (leftPupilRef.current) {
         leftPupilRef.current.style.transform = `translate(${leftCurrentX.toFixed(2)}px, ${leftCurrentY.toFixed(2)}px)`;
