@@ -1,9 +1,9 @@
 import Robot from "./components/Robot/Robot";
 import "./App.css";
 
-function App(){
-  return(
-    <div>
+function App() {
+  return (
+    <div className="app">
       <Robot />
     </div>
   );

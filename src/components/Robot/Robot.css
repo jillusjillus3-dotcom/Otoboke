@@ -6,43 +6,185 @@
 
     margin:auto;
     margin-top:80px;
+
+    animation: float 3s ease-in-out infinite;
 }
 
-.robot img{
-    position:absolute;
+.robot img,
+.robot svg,
+.robot div {
+    position: absolute;
 }
 
 .antenna{
-    left:144px;
-    top:13px;
+    left:67px;
+    top:-18px;
+    z-index: 1;
 }
 
 .head{
-    left:87px;
-    top:41px;
+    left:77px;
+    top:31px;
+    width:146px;
+    height:125px;
+    z-index: 3;
+
+    
+}
+
+.headFrame{
+    width:100%;
+    height:100%;
+}
+
+.screen{
+    left:13px;
+    top:10px;
+    width:120px;
+    height:106px;
+}
+
+.faceScreen{
+    width:100%;
+    height:100%;
+}
+
+.left-eye{
+    left:14px;
+    top:22px;
+    width:44px;
+    height:41px;
+}
+
+.right-eye{
+    left:62px;
+    top:22px;
+    width:44px;
+    height:41px;
+}
+
+.mouth{
+    left:24px;
+    top:62px;
+    width:72px;
+    height:20px;
 }
 
 .neck{
     left:130px;
     top:146px;
+    z-index: 1;
 }
 
 .body{
     left:100px;
     top:150px;
+    z-index: 2;
 }
 
 .leftArm{
     left:190px;
     top:150px;
+    z-index: 1;
 }
 
 .rightArm{
     left:77px;
     top:150px;
+    z-index: 1;
 }
 
 .wheel{
     left:120px;
     top:265px;
+    z-index: 1;
+}
+
+@keyframes float {
+
+    0%{
+        transform: translateY(0px);
+    }
+
+    50%{
+        transform: translateY(-12px);
+    }
+
+    100%{
+        transform: translateY(0px);
+    }
+
+}
+
+.left-eye,
+.right-eye {
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 96%, 100% {
+    transform: scaleY(1);
+  }
+
+  97%, 99% {
+    transform: scaleY(0.05);
+  }
+}
+
+.head {
+    animation: headIdle 6s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+@keyframes headIdle {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+
+}
+
+.antenna{
+    animation: antennaBounce 2.5s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+@keyframes antennaBounce {
+
+    0%{
+        transform: rotate(0deg);
+    }
+
+    25%{
+        transform: rotate(-4deg);
+    }
+
+    50%{
+        transform: rotate(0deg);
+    }
+
+    75%{
+        transform: rotate(4deg);
+    }
+
+    100%{
+        transform: rotate(0deg);
+    }
+
 }
