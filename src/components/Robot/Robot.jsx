@@ -31,11 +31,22 @@ import LeftPupil from "../../assets/svg/LeftPupil.svg";
 import RightPupil from "../../assets/svg/RightPupil.svg";
 
 // Mouth shapes
-import MouthNeutral from "../../assets/svg/Mouth.svg";
+import MouthNeutral from "../../assets/svg/MouthNeutral.svg";
 import MouthBigSmile from "../../assets/svg/MouthBigSmile.svg";
 import MouthHappy from "../../assets/svg/MouthHappy.svg";
 import MouthSad from "../../assets/svg/MouthSad.svg";
 import MouthSurprised from "../../assets/svg/MouthSurprised.svg";
+
+// Eye expression shapes
+import LeftEyeHappy from "../../assets/svg/LeftEyeHappy.svg";
+import LeftEyeBigSmile from "../../assets/svg/LeftEyeBigSmile.svg";
+import LeftEyeSad from "../../assets/svg/LeftEyeSad.svg";
+import LeftEyeSurprised from "../../assets/svg/LeftEyeSurprised.svg";
+
+import RightEyeHappy from "../../assets/svg/RightEyeHappy..svg"; // Note double dot
+import RightEyeBigSmile from "../../assets/svg/RightEyeBigSmile.svg";
+import RightEyeSad from "../../assets/svg/RightEyeSad.svg";
+import RightEyeSurprised from "../../assets/svg/RightEyeSurprised.svg";
 
 function Robot() {
   const leftEyeRef = useRef(null);
@@ -43,7 +54,7 @@ function Robot() {
   const leftPupilRef = useRef(null);
   const rightPupilRef = useRef(null);
 
-  // Mouth emotion state
+  // Mouth and eye emotion state
   const [emotion, setEmotion] = useState("neutral");
   const emotionTimeoutRef = useRef(null);
   const clickTimeoutRef = useRef(null);
@@ -80,7 +91,7 @@ function Robot() {
       clearTimeout(clickTimeoutRef.current);
       clickTimeoutRef.current = null;
     }
-    triggerEmotion("smile", 3000);
+    triggerEmotion("bigSmile", 3000);
   };
 
   const handleFaceMouseEnter = () => {
@@ -196,11 +207,29 @@ function Robot() {
   const mouthImages = {
     neutral: MouthNeutral,
     happy: MouthHappy,
-    smile: MouthBigSmile,
+    bigSmile: MouthBigSmile,
     sad: MouthSad,
     surprised: MouthSurprised,
   };
   const activeMouth = mouthImages[emotion] || MouthNeutral;
+
+  // Map emotion to eye SVGs
+  const leftEyeImages = {
+    neutral: LeftEye,
+    happy: LeftEyeHappy,
+    bigSmile: LeftEyeBigSmile,
+    sad: LeftEyeSad,
+    surprised: LeftEyeSurprised,
+  };
+  const rightEyeImages = {
+    neutral: RightEye,
+    happy: RightEyeHappy,
+    bigSmile: RightEyeBigSmile,
+    sad: RightEyeSad,
+    surprised: RightEyeSurprised,
+  };
+  const activeLeftEye = leftEyeImages[emotion] || LeftEye;
+  const activeRightEye = rightEyeImages[emotion] || RightEye;
 
   return (
     <div className="robot" onClick={handleRobotClick} onDoubleClick={handleRobotDoubleClick}>
@@ -243,11 +272,11 @@ function Robot() {
         <div className="screen">
           <img src={FaceScreen} className="faceScreen" alt="face screen" />
           <div className="left-eye" ref={leftEyeRef}>
-            <img src={LeftEye} className="eye-base" alt="left eye" />
+            <img src={activeLeftEye} className="eye-base" alt="left eye" />
             <img src={LeftPupil} className="eye-pupil" ref={leftPupilRef} alt="left pupil" />
           </div>
           <div className="right-eye" ref={rightEyeRef}>
-            <img src={RightEye} className="eye-base" alt="right eye" />
+            <img src={activeRightEye} className="eye-base" alt="right eye" />
             <img src={RightPupil} className="eye-pupil" ref={rightPupilRef} alt="right pupil" />
           </div>
           <img src={activeMouth} className="mouth" alt="mouth" />
