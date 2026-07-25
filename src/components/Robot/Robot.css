@@ -8,6 +8,7 @@
     margin-top:80px;
 
     animation: float 3s ease-in-out infinite;
+    transition: left 1.2s linear, top 1.2s linear;
 }
 
 .robot img,

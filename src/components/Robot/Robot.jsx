@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Robot.css";
 
 import HeadFrame from "../../assets/svg/HeadFrame.svg";
@@ -34,6 +34,48 @@ function Robot() {
 
   // Store current emotion in a ref to avoid triggering unnecessary re-renders in the tracking loop
   const currentEmotionRef = useRef("neutral");
+
+  const [isSelected, setIsSelected] = useState(false);
+  const [position, setPosition] = useState(null);
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const nextSelected = !isSelected;
+    setIsSelected(nextSelected);
+
+    if (nextSelected) {
+      if (robotRef.current && !position) {
+        const rect = robotRef.current.getBoundingClientRect();
+        setPosition({ x: rect.left, y: rect.top });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!isSelected) return;
+
+    const handleWindowClick = (e) => {
+      if (robotRef.current && robotRef.current.contains(e.target)) {
+        return;
+      }
+      
+      if (e.button === 0) {
+        if (robotRef.current) {
+          const rect = robotRef.current.getBoundingClientRect();
+          const targetX = e.clientX - rect.width / 2;
+          const targetY = e.clientY - rect.height / 2;
+          setPosition({ x: targetX, y: targetY });
+        }
+      }
+    };
+
+    window.addEventListener("click", handleWindowClick);
+    return () => {
+      window.removeEventListener("click", handleWindowClick);
+    };
+  }, [isSelected]);
 
   // Eye tracking useEffect
   useEffect(() => {
@@ -136,7 +178,18 @@ function Robot() {
   }, []);
 
   return (
-    <div className="robot" ref={robotRef}>
+    <div 
+      className={`robot${isSelected ? " selected" : ""}`} 
+      ref={robotRef}
+      onContextMenu={handleContextMenu}
+      style={position ? {
+        position: "fixed",
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        margin: 0,
+        marginTop: 0,
+      } : {}}
+    >
       <img src={Neck} className="neck" alt="neck" />
       
       <div className="leftArm">
@@ -178,6 +231,7 @@ function Robot() {
           leftPupilRef={leftPupilRef}
           rightPupilRef={rightPupilRef}
           onEmotionChange={(newEmotion) => { currentEmotionRef.current = newEmotion; }}
+          isAntennaGlowing={isSelected}
         />
       </div>
     </div>

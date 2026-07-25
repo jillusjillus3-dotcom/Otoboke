@@ -38,10 +38,10 @@ function Emotion({
   rightEyeRef, 
   leftPupilRef, 
   rightPupilRef,
-  onEmotionChange
+  onEmotionChange,
+  isAntennaGlowing
 }) {
   const [emotion, setEmotion] = useState("neutral");
-  const [isAntennaGlowing, setIsAntennaGlowing] = useState(false);
   const emotionTimeoutRef = useRef(null);
   const clickTimeoutRef = useRef(null);
 
@@ -146,13 +146,6 @@ function Emotion({
         src={Antenna} 
         className={`antenna${isAntennaGlowing ? " glowing" : ""}`} 
         alt="antenna" 
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsAntennaGlowing(!isAntennaGlowing);
-        }}
-        onDoubleClick={(e) => {
-          e.stopPropagation();
-        }}
       />
       <div className="screen" onMouseEnter={handleFaceMouseEnter}>
         <img src={FaceScreen} className="faceScreen" alt="face screen" />
