@@ -5,7 +5,6 @@ import HeadFrame from "../../assets/svg/HeadFrame.svg";
 import Body from "../../assets/svg/Body.svg";
 import Neck from "../../assets/svg/Neck.svg";
 import Wheel from "../../assets/svg/Wheel.svg";
-import Antenna from "../../assets/svg/Antenna.svg";
 
 // Left arm parts
 import LeftShoulder from "../../assets/svg/LeftShoulder.svg";
@@ -171,7 +170,6 @@ function Robot() {
       <img src={Wheel} className="wheel" alt="wheel" />
       
       <div className="head">
-        <img src={Antenna} className="antenna" alt="antenna" />
         <img src={HeadFrame} className="headFrame" alt="head frame" />
         <Emotion 
           robotRef={robotRef}

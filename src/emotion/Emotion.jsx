@@ -29,6 +29,9 @@ import RightPupil from "../assets/svg/RightPupil.svg";
 // Face background
 import FaceScreen from "../assets/svg/FaceScreen.svg";
 
+// Antenna shape
+import Antenna from "../assets/svg/Antenna.svg";
+
 function Emotion({ 
   robotRef, 
   leftEyeRef, 
@@ -38,6 +41,7 @@ function Emotion({
   onEmotionChange
 }) {
   const [emotion, setEmotion] = useState("neutral");
+  const [isAntennaGlowing, setIsAntennaGlowing] = useState(false);
   const emotionTimeoutRef = useRef(null);
   const clickTimeoutRef = useRef(null);
 
@@ -137,30 +141,44 @@ function Emotion({
   const activeRightEye = rightEyeImages[emotion] || RightEye;
 
   return (
-    <div className="screen" onMouseEnter={handleFaceMouseEnter}>
-      <img src={FaceScreen} className="faceScreen" alt="face screen" />
-      <div className="left-eye" ref={leftEyeRef}>
-        <img src={activeLeftEye} className="eye-base" alt="left eye" />
-        <img 
-          src={LeftPupil} 
-          className="eye-pupil" 
-          ref={leftPupilRef} 
-          style={{ opacity: (emotion === "neutral" || emotion === "surprised") ? 1 : 0 }} 
-          alt="left pupil" 
-        />
+    <>
+      <img 
+        src={Antenna} 
+        className={`antenna${isAntennaGlowing ? " glowing" : ""}`} 
+        alt="antenna" 
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsAntennaGlowing(!isAntennaGlowing);
+        }}
+        onDoubleClick={(e) => {
+          e.stopPropagation();
+        }}
+      />
+      <div className="screen" onMouseEnter={handleFaceMouseEnter}>
+        <img src={FaceScreen} className="faceScreen" alt="face screen" />
+        <div className="left-eye" ref={leftEyeRef}>
+          <img src={activeLeftEye} className="eye-base" alt="left eye" />
+          <img 
+            src={LeftPupil} 
+            className="eye-pupil" 
+            ref={leftPupilRef} 
+            style={{ opacity: (emotion === "neutral" || emotion === "surprised") ? 1 : 0 }} 
+            alt="left pupil" 
+          />
+        </div>
+        <div className="right-eye" ref={rightEyeRef}>
+          <img src={activeRightEye} className="eye-base" alt="right eye" />
+          <img 
+            src={RightPupil} 
+            className="eye-pupil" 
+            ref={rightPupilRef} 
+            style={{ opacity: (emotion === "neutral" || emotion === "surprised") ? 1 : 0 }} 
+            alt="right pupil" 
+          />
+        </div>
+        <img src={activeMouth} className="mouth" alt="mouth" />
       </div>
-      <div className="right-eye" ref={rightEyeRef}>
-        <img src={activeRightEye} className="eye-base" alt="right eye" />
-        <img 
-          src={RightPupil} 
-          className="eye-pupil" 
-          ref={rightPupilRef} 
-          style={{ opacity: (emotion === "neutral" || emotion === "surprised") ? 1 : 0 }} 
-          alt="right pupil" 
-        />
-      </div>
-      <img src={activeMouth} className="mouth" alt="mouth" />
-    </div>
+    </>
   );
 }
 
