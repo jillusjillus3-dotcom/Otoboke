@@ -144,32 +144,36 @@ function Emotion({
     <>
       <img 
         src={Antenna} 
-        className={`antenna${isAntennaGlowing ? " glowing" : ""}`} 
+        className={`absolute left-[67px] top-[-18px] z-10 origin-bottom cursor-pointer transition-[filter] duration-300 hover:drop-shadow-[0_0_6px_rgba(255,56,60,0.7)] ${
+          isAntennaGlowing
+            ? "animate-antenna-bounce animate-antenna-glow"
+            : "animate-antenna-bounce"
+        }`} 
         alt="antenna" 
       />
-      <div className="screen" onMouseEnter={handleFaceMouseEnter}>
-        <img src={FaceScreen} className="faceScreen" alt="face screen" />
-        <div className="left-eye" ref={leftEyeRef}>
-          <img src={activeLeftEye} className="eye-base" alt="left eye" />
+      <div className="absolute left-[13px] top-[10px] w-[120px] h-[106px]" onMouseEnter={handleFaceMouseEnter}>
+        <img src={FaceScreen} className="absolute left-0 top-0 w-full h-full" alt="face screen" />
+        <div className="absolute left-[14px] top-[22px] w-[44px] h-[41px] animate-blink" ref={leftEyeRef}>
+          <img src={activeLeftEye} className="absolute left-0 top-0 w-full h-full" alt="left eye" />
           <img 
             src={LeftPupil} 
-            className="eye-pupil" 
+            className="absolute left-[15px] top-[14px] w-[14px] h-[13px]" 
             ref={leftPupilRef} 
             style={{ opacity: (emotion === "neutral" || emotion === "surprised") ? 1 : 0 }} 
             alt="left pupil" 
           />
         </div>
-        <div className="right-eye" ref={rightEyeRef}>
-          <img src={activeRightEye} className="eye-base" alt="right eye" />
+        <div className="absolute left-[62px] top-[22px] w-[44px] h-[41px] animate-blink" ref={rightEyeRef}>
+          <img src={activeRightEye} className="absolute left-0 top-0 w-full h-full" alt="right eye" />
           <img 
             src={RightPupil} 
-            className="eye-pupil" 
+            className="absolute left-[15px] top-[14px] w-[14px] h-[13px]" 
             ref={rightPupilRef} 
             style={{ opacity: (emotion === "neutral" || emotion === "surprised") ? 1 : 0 }} 
             alt="right pupil" 
           />
         </div>
-        <img src={activeMouth} className="mouth" alt="mouth" />
+        <img src={activeMouth} className="absolute left-[6px] top-[64px] w-[108px] h-[30px]" alt="mouth" />
       </div>
     </>
   );

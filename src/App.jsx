@@ -1,9 +1,8 @@
 import Robot from "./components/Robot/Robot";
-import "./App.css";
 
 function App() {
   return (
-    <div className="app">
+    <div className="w-screen h-screen flex justify-center items-center">
       <Robot />
     </div>
   );

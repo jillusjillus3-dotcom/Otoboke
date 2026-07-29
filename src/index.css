@@ -1,3 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-blink: blink 2s infinite;
+  --animate-head-idle: headIdle 6s ease-in-out infinite;
+  --animate-antenna-bounce: antennaBounce 2.5s ease-in-out infinite;
+  --animate-antenna-glow: antennaGlowPulse 1.5s ease-in-out infinite alternate;
+  --animate-left-arm-swing: leftArmSwing 6s ease-in-out infinite;
+  --animate-right-arm-swing: rightArmSwing 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes blink {
+    0%, 96%, 100% {
+      transform: scaleY(1);
+    }
+    97%, 99% {
+      transform: scaleY(0.05);
+    }
+  }
+
+  @keyframes headIdle {
+    0%, 50%, 100% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(-2deg);
+    }
+    75% {
+      transform: rotate(2deg);
+    }
+  }
+
+  @keyframes antennaGlowPulse {
+    0% {
+      filter: drop-shadow(0 0 6px #FF383C) drop-shadow(0 0 12px #FF383C) drop-shadow(0 0 24px rgba(255, 56, 60, 0.5));
+    }
+    100% {
+      filter: drop-shadow(0 0 14px #FF383C) drop-shadow(0 0 28px #FF383C) drop-shadow(0 0 48px rgba(255, 56, 60, 0.8));
+    }
+  }
+
+  @keyframes antennaBounce {
+    0%, 50%, 100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-4deg);
+    }
+    75% {
+      transform: rotate(4deg);
+    }
+  }
+
+  @keyframes leftArmSwing {
+    0%, 50%, 100% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(-4deg);
+    }
+    75% {
+      transform: rotate(4deg);
+    }
+  }
+
+  @keyframes rightArmSwing {
+    0%, 50%, 100% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(4deg);
+    }
+    75% {
+      transform: rotate(-4deg);
+    }
+  }
+}
+
 * {
   margin: 0;
   padding: 0;

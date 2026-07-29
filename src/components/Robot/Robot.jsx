@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Robot.css";
 
 import HeadFrame from "../../assets/svg/HeadFrame.svg";
 import Body from "../../assets/svg/Body.svg";
 import Neck from "../../assets/svg/Neck.svg";
-import Wheel from "../../assets/svg/Wheel.svg";
 
 // Left arm parts
 import LeftShoulder from "../../assets/svg/LeftShoulder.svg";
@@ -20,7 +18,7 @@ import RightUpperJoint from "../../assets/svg/RightUpperJoint.svg";
 import RightUpperArm from "../../assets/svg/RightUpperArm.svg";
 import RightLowerJoint from "../../assets/svg/RightLowerJoint.svg";
 import RightLowerArm from "../../assets/svg/RightLowerArm.svg";
-import RihtClaw from "../../assets/svg/RihtClaw.svg";
+import RightClaw from "../../assets/svg/RightClaw.svg";
 
 // Emotion component
 import Emotion from "../../emotion/Emotion";
@@ -179,7 +177,7 @@ function Robot() {
 
   return (
     <div 
-      className={`robot${isSelected ? " selected" : ""}`} 
+      className="relative w-[300px] h-[450px] mx-auto mt-[80px] animate-float transition-[left,top] duration-[1200ms] ease-linear" 
       ref={robotRef}
       onContextMenu={handleContextMenu}
       style={position ? {
@@ -190,40 +188,38 @@ function Robot() {
         marginTop: 0,
       } : {}}
     >
-      <img src={Neck} className="neck" alt="neck" />
+      <img src={Neck} className="absolute left-[130.5px] top-[126px] w-[39px] h-[30px] z-10 origin-[20px_30px] animate-head-idle" alt="neck" />
       
-      <div className="leftArm">
-        <img src={LeftShoulder} className="arm-shoulder" alt="left shoulder" />
-        <div className="UpperArmWrapper">
-          <img src={LeftUpperJoint} className="arm-upperJoint" alt="left upper joint" />
-          <img src={LeftUpperArm} className="arm-upperArm" alt="left upper arm" />
-          <div className="LowerArmWrapper">
-            <img src={LeftLowerJoint} className="arm-lowerJoint" alt="left lower joint" />
-            <img src={LeftLowerArm} className="arm-lowerArm" alt="left lower arm" />
-            <img src={LeftClaw} className="arm-claw" alt="left claw" />
+      <div className="absolute left-[184.5px] top-[155px] w-[60px] h-[130px] z-[25]">
+        <img src={LeftShoulder} className="absolute left-[12.5px] top-0 w-[23px] h-[23px]" alt="left shoulder" />
+        <div className="absolute left-[35px] top-[11.5px] w-0 h-0 origin-top animate-left-arm-swing">
+          <img src={LeftUpperJoint} className="absolute left-[-3px] top-[35px] w-[6px] h-[4px] max-w-none" alt="left upper joint" />
+          <img src={LeftUpperArm} className="absolute left-[-8px] top-0 w-[16px] h-[35px] max-w-none" alt="left upper arm" />
+          <div className="absolute left-0 top-[39px] w-0 h-0 origin-top">
+            <img src={LeftLowerJoint} className="absolute left-[-3px] top-[35px] w-[6px] h-[4px] max-w-none" alt="left lower joint" />
+            <img src={LeftLowerArm} className="absolute left-[-8px] top-0 w-[16px] h-[35px] max-w-none" alt="left lower arm" />
+            <img src={LeftClaw} className="absolute left-[-10px] top-[39px] w-[20px] h-[28px] max-w-none" alt="left claw" />
           </div>
         </div>
       </div>
       
-      <img src={Body} className="body" alt="body" />
+      <img src={Body} className="absolute left-[90px] top-[146px] w-[120px] h-[144px] z-20" alt="body" />
       
-      <div className="rightArm">
-        <img src={RightShoulder} className="arm-shoulder" alt="right shoulder" />
-        <div className="UpperArmWrapper">
-          <img src={RightUpperJoint} className="arm-upperJoint" alt="right upper joint" />
-          <img src={RightUpperArm} className="arm-upperArm" alt="right upper arm" />
-          <div className="LowerArmWrapper">
-            <img src={RightLowerJoint} className="arm-lowerJoint" alt="right lower joint" />
-            <img src={RightLowerArm} className="arm-lowerArm" alt="right lower arm" />
-            <img src={RihtClaw} className="arm-claw" alt="right claw" />
+      <div className="absolute left-[55.5px] top-[155px] w-[60px] h-[130px] z-[25]">
+        <img src={RightShoulder} className="absolute left-[24.5px] top-0 w-[23px] h-[23px]" alt="right shoulder" />
+        <div className="absolute left-[25px] top-[11.5px] w-0 h-0 origin-top animate-right-arm-swing">
+          <img src={RightUpperJoint} className="absolute left-[-3px] top-[35px] w-[6px] h-[4px] max-w-none" alt="right upper joint" />
+          <img src={RightUpperArm} className="absolute left-[-8px] top-0 w-[16px] h-[35px] max-w-none" alt="right upper arm" />
+          <div className="absolute left-0 top-[39px] w-0 h-0 origin-top">
+            <img src={RightLowerJoint} className="absolute left-[-3px] top-[35px] w-[6px] h-[4px] max-w-none" alt="right lower joint" />
+            <img src={RightLowerArm} className="absolute left-[-8px] top-0 w-[16px] h-[35px] max-w-none" alt="right lower arm" />
+            <img src={RightClaw} className="absolute left-[-10px] top-[39px] w-[20px] h-[28px] max-w-none" alt="right claw" />
           </div>
         </div>
       </div>
-      
-      <img src={Wheel} className="wheel" alt="wheel" />
-      
-      <div className="head">
-        <img src={HeadFrame} className="headFrame" alt="head frame" />
+
+      <div className="absolute left-[77px] top-[31px] w-[146px] h-[125px] z-30 animate-head-idle origin-bottom">
+        <img src={HeadFrame} className="absolute left-0 top-0 w-full h-full" alt="head frame" />
         <Emotion 
           robotRef={robotRef}
           leftEyeRef={leftEyeRef}
