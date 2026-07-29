@@ -23,6 +23,9 @@ import RightClaw from "../../assets/svg/RightClaw.svg";
 // Emotion component
 import Emotion from "../../emotion/Emotion";
 
+// SpeechBubble component
+import SpeechBubble from "../SpeechBubble/SpeechBubble";
+
 function Robot() {
   const robotRef = useRef(null);
   const leftEyeRef = useRef(null);
@@ -35,6 +38,7 @@ function Robot() {
 
   const [isSelected, setIsSelected] = useState(false);
   const [position, setPosition] = useState(null);
+  const [speechMessage, setSpeechMessage] = useState("Hello! I'm Otoboke! 🤖");
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -188,6 +192,11 @@ function Robot() {
         marginTop: 0,
       } : {}}
     >
+      <SpeechBubble 
+        message={speechMessage} 
+        onClose={() => setSpeechMessage("")}
+        className="absolute -top-[70px] left-[110px] z-40"
+      />
       <img src={Neck} className="absolute left-[130.5px] top-[126px] w-[39px] h-[30px] z-10 origin-[20px_30px] animate-head-idle" alt="neck" />
       
       <div className="absolute left-[184.5px] top-[155px] w-[60px] h-[130px] z-[25]">

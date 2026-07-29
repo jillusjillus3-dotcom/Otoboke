@@ -1,3 +1,19 @@
 <svg width="146" height="125" viewBox="0 0 146 125" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="10" y="10" width="126" height="105" rx="15" fill="#4F738E"/>
+  <defs>
+    <linearGradient id="headFrameGrad" x1="73" y1="8" x2="73" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#F6F7FA"/>
+      <stop offset="100%" stop-color="#E5E8F0"/>
+    </linearGradient>
+  </defs>
+  <path 
+    d="M 15,62 
+       C 15,20 40,8 73,8 
+       C 106,8 131,20 131,62 
+       C 131,94 122,116 98,116 
+       L 48,116 
+       C 24,116 15,94 15,62 
+       Z" 
+    fill="url(#headFrameGrad)"
+  />
 </svg>
